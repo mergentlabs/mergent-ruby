@@ -1,6 +1,7 @@
 # Mergent
 
 [![Gem Version](https://badge.fury.io/rb/mergent.svg)](https://badge.fury.io/rb/mergent)
+[![CI](https://github.com/mergentlabs/mergent-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/mergentlabs/mergent-ruby/actions/workflows/ci.yml)
 
 The Mergent Ruby library provides convenient access to the Mergent API from
 applications written in the Ruby language.

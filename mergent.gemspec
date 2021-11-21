@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.author = "Mergent"
   spec.email = "support@mergent.co"
 
-  spec.summary = "Ruby bindings for the Mergent API"
-  spec.description = "See https://mergent.co for details."
+  spec.summary = "Ruby library for the Mergent API."
+  spec.description = "Ruby library for the Mergent API. See https://mergent.co for details."
   spec.homepage = "https://mergent.co"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"

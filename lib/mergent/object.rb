@@ -1,3 +1,3 @@
 module Mergent
-  class Object < OpenStruct; end
+  class Object < OpenStruct; end # rubocop:disable Style/OpenStructUse
 end

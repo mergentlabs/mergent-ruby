@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mergent::Task do
   describe "#create" do
     it "creates and returns a Task with the specified params" do

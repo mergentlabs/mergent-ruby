@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mergent::Client do
   before { Mergent.api_key = "abcd1234" }
 

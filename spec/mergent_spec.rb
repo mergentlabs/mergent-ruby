@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mergent do
   it "has a version number" do
     expect(Mergent::VERSION).not_to be nil

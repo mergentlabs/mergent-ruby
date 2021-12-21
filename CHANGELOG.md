@@ -1,6 +1,9 @@
 ## [Unreleased]
 
+## [0.1.1] - 2021-12-21
+
 - Define explicit methods in `Mergent::Task`, to allow for use of verifying doubles when testing against them.
+- Update summary and description for RubyGems.org
 
 ## [0.1.0] - 2021-11-21
 

@@ -1,4 +1,4 @@
-# Mergent
+# Mergent Ruby Library
 
 [![Gem Version](https://badge.fury.io/rb/mergent.svg)](https://badge.fury.io/rb/mergent)
 [![CI](https://github.com/mergentlabs/mergent-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/mergentlabs/mergent-ruby/actions/workflows/ci.yml)

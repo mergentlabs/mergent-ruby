@@ -10,7 +10,7 @@ module Mergent
       new(object)
     end
 
-    %i[name description status request scheduled_for delay cron].each do |name|
+    %i[name description status request scheduled_for delay].each do |name|
       define_method(name) do
         self[name]
       end

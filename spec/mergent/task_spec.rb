@@ -25,7 +25,7 @@ RSpec.describe Mergent::Task do
   end
 
   describe "delegated methods" do
-    %i[name description status request scheduled_for delay cron].each do |method_name|
+    %i[name description status request scheduled_for delay].each do |method_name|
       it "defines a method for #{method_name}" do
         expect(described_class.new(method_name => :foo).public_send(method_name)).to(eq(:foo))
       end

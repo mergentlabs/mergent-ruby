@@ -6,14 +6,8 @@ require_relative "object"
 module Mergent
   class Task < Mergent::Object
     def self.create(params = {})
-      object = Client.post("tasks", params)
-      new(object)
-    end
-
-    %i[name description status request scheduled_for delay].each do |name|
-      define_method(name) do
-        self[name]
-      end
+      data = Client.post("tasks", params)
+      new(data)
     end
   end
 end

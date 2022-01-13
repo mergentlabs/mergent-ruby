@@ -5,15 +5,17 @@ require_relative "object"
 
 module Mergent
   class Task < Mergent::Object
-    def self.create(params = {})
-      object = Client.post("tasks", params)
-      new(object)
+    ATTRS = %i[name description status request scheduled_for created_at].freeze
+
+    ATTRS.each do |name|
+      define_method(name) do
+        @_data[name]
+      end
     end
 
-    %i[name description status request scheduled_for delay].each do |name|
-      define_method(name) do
-        self[name]
-      end
+    def self.create(params = {})
+      data = Client.post("tasks", params)
+      new(data)
     end
   end
 end

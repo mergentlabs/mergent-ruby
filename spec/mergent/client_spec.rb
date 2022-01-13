@@ -16,11 +16,10 @@ RSpec.describe Mergent::Client do
              )
              .to_return(body: params.to_json)
 
-      object = described_class.post(:objects, params)
+      data = described_class.post(:objects, params)
 
       expect(stub).to have_been_made
-      expect(object).to be_a Mergent::Object
-      expect(object.name).to eq "objectname"
+      expect(data["name"]).to eq "objectname"
     end
 
     context "when the API returns an error with a body" do

@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.1.2] - 2022-1-13
+
+- Define explicit methods in `Mergent::Task`, to allow for use of verifying doubles when testing against them.
+- Remove deprecated `cron` method definition
+
 ## [0.1.1] - 2021-12-21
 
 - Define explicit methods in `Mergent::Task`, to allow for use of verifying doubles when testing against them.

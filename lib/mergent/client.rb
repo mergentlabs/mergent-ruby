@@ -20,7 +20,7 @@ module Mergent
 
       case response
       when Net::HTTPSuccess
-        JSON.parse(response.read_body, object_class: Mergent::Object)
+        JSON.parse(response.read_body)
       else
         begin
           body = JSON.parse(response.read_body)

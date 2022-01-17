@@ -6,7 +6,7 @@ require "json"
 module Mergent
   class Client
     def self.post(resource, params) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      uri = URI("https://api.mergent.co/v1/#{resource}")
+      uri = URI("#{Mergent.endpoint}/#{resource}")
       headers = {
         Authorization: "Bearer #{Mergent.api_key}",
         "Content-Type": "application/json"
@@ -15,7 +15,7 @@ module Mergent
       request.body = params.to_json
 
       https = Net::HTTP.new(uri.host, uri.port)
-      https.use_ssl = true
+      https.use_ssl = Mergent.endpoint.start_with?("https")
       response = https.request(request)
 
       case response

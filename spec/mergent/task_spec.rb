@@ -14,7 +14,7 @@ RSpec.describe Mergent::Task do
       Mergent.api_key = "abcd1234"
 
       params = { request: { url: "https://example.com" } }
-      stub = stub_request(:post, "https://api.mergent.co/v1/tasks")
+      stub = stub_request(:post, "#{Mergent.endpoint}/tasks")
              .with(
                headers: {
                  Authorization: "Bearer #{Mergent.api_key}",

@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 RSpec.describe Mergent::Client do
-  before { Mergent.api_key = "abcd1234" }
+  before do
+    Mergent.api_key = "abcd1234"
+    Mergent.endpoint = "https://testhost.mergent.co/api"
+  end
 
   describe "#post" do
     it "makes a POST request to the specified resource, parsing the JSON body into an Object" do
       params = { name: "objectname" }
-      stub = stub_request(:post, "https://api.mergent.co/v1/objects")
+      stub = stub_request(:post, "#{Mergent.endpoint}/objects")
              .with(
                headers: {
                  Authorization: "Bearer #{Mergent.api_key}",
@@ -24,18 +27,18 @@ RSpec.describe Mergent::Client do
 
     context "when the API returns an error with a body" do
       it "raises an Error" do
-        stub_request(:post, "https://api.mergent.co/v1/objects")
-          .to_return(status: 422, body: { message: "A 422 has occured." }.to_json)
+        stub_request(:post, "#{Mergent.endpoint}/objects")
+          .to_return(status: 422, body: { message: "A 422 has occurred." }.to_json)
 
         expect do
           described_class.post(:objects, {})
-        end.to raise_error(Mergent::Error, "A 422 has occured.")
+        end.to raise_error(Mergent::Error, "A 422 has occurred.")
       end
     end
 
     context "when the API returns an error without a body" do
       it "raises an Error" do
-        stub_request(:post, "https://api.mergent.co/v1/objects")
+        stub_request(:post, "#{Mergent.endpoint}/objects")
           .to_return(status: 500)
 
         expect do
@@ -46,7 +49,7 @@ RSpec.describe Mergent::Client do
 
     context "when the API is unavailable" do
       it "raises a ConnectionError" do
-        stub_request(:post, "https://api.mergent.co/v1/objects")
+        stub_request(:post, "#{Mergent.endpoint}/objects")
           .to_raise(Errno::ECONNRESET)
 
         expect do

@@ -25,7 +25,7 @@ RSpec.describe Mergent::Client do
       expect(data["name"]).to eq "objectname"
     end
 
-    context "when the API returns an error with a body" do
+    context "when the API returns an error with a body, without additional errors" do
       it "raises an Error" do
         stub_request(:post, "#{Mergent.endpoint}/objects")
           .to_return(status: 422, body: { message: "A 422 has occurred." }.to_json)
@@ -33,6 +33,38 @@ RSpec.describe Mergent::Client do
         expect do
           described_class.post(:objects, {})
         end.to raise_error(Mergent::Error, "A 422 has occurred.")
+      end
+    end
+
+    context "when the API returns an error with a body, including additional errors" do
+      let(:body) do
+        {
+          message: "A 422 has occurred.",
+          errors: [
+            {
+              message: "Name contains invalid characters"
+            },
+            {
+              message: "Delay is not a valid ISO 8601 duration"
+            },
+            {
+              message: "Request url is not a valid URL"
+            }
+          ]
+        }
+      end
+
+      it "raises an Error" do
+        stub_request(:post, "#{Mergent.endpoint}/objects")
+          .to_return(status: 422, body: body.to_json)
+
+        expect do
+          described_class.post(:objects, {})
+        end.to raise_error(
+          Mergent::Error,
+          "A 422 has occurred. - Name contains invalid characters, Delay is not a valid ISO 8601 duration, "\
+          "Request url is not a valid URL"
+        )
       end
     end
 

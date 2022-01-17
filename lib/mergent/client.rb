@@ -27,10 +27,20 @@ module Mergent
         rescue JSON::ParserError
           body = {}
         end
-        raise Mergent::Error, body["message"]
+        raise Mergent::Error, error_message(body)
       end
     rescue EOFError, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH, Errno::ETIMEDOUT, SocketError
       raise Mergent::ConnectionError
     end
+
+    private
+
+    def self.error_message(body)
+      breakdown = body.fetch("errors", []).map { |error| error.fetch("message", nil) }.compact.join(", ")
+      msg = body["message"]
+      msg << " - #{breakdown}" unless breakdown.empty?
+      msg
+    end
+    private_class_method :error_message
   end
 end

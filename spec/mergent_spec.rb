@@ -14,4 +14,18 @@ RSpec.describe Mergent do
       end.to change(described_class, :api_key).from(nil).to("abcd1234")
     end
   end
+
+  describe ".endpoint=" do
+    after do
+      described_class.endpoint = Mergent::ENDPOINT
+    end
+
+    it "sets the config's endpoint" do
+      described_class.endpoint = nil
+
+      expect do
+        described_class.endpoint = "https://webhook.site/foobar"
+      end.to change(described_class, :endpoint).from(nil).to("https://webhook.site/foobar")
+    end
+  end
 end

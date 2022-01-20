@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "mergent/errors"
+require_relative "mergent/request_validator"
 require_relative "mergent/task"
 require_relative "mergent/version"
 

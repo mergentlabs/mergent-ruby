@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.1] - 2022-01-20
+
+- Add `Mergent::RequestValidator` to validate that webhooks came from Mergent's API
+
 ## [0.2.0] - 2022-01-20
 
 - Add `Mergent::RequestValidator` to validate that webhooks came from Mergent's API

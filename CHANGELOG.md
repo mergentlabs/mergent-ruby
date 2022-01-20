@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.0] - 2022-01-20
+
+- Add `Mergent::RequestValidator` to validate that webhooks came from Mergent's API
+
 ## [0.1.2] - 2022-1-13
 
 - Define explicit methods in `Mergent::Task`, to allow for use of verifying doubles when testing against them.

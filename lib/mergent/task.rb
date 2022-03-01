@@ -6,7 +6,7 @@ require_relative "object"
 module Mergent
   class Task < Mergent::Object
     DEFAULT_QUEUE = "default"
-    ATTRS = %i[queue status request scheduled_for created_at].freeze
+    ATTRS = %i[id queue status request scheduled_for created_at].freeze
 
     ATTRS.each do |name|
       define_method(name) do

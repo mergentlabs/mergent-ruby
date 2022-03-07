@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- Add `id` field to Task
+- Add `queue` field to Task, defaulting to `default`
+- Remove `description` field from Task
+
 ## [0.2.2] - 2022-01-20
 
 - Add `Mergent::RequestValidator` to validate that webhooks came from Mergent's API

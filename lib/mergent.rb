@@ -6,7 +6,7 @@ require_relative "mergent/task"
 require_relative "mergent/version"
 
 module Mergent
-  ENDPOINT = "https://api.mergent.co/v1"
+  ENDPOINT = "https://api.mergent.co/v2"
 
   class << self
     attr_accessor :api_key, :endpoint

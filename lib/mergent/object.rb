@@ -2,6 +2,8 @@
 
 module Mergent
   class Object
+    DEFAULT_QUEUE = "default"
+
     attr_reader :_data
 
     def initialize(data = {})

@@ -4,8 +4,8 @@ require_relative "client"
 require_relative "object"
 
 module Mergent
-  class Task < Mergent::Object
-    ATTRS = %i[id name queue status request scheduled_for created_at].freeze
+  class Schedule < Mergent::Object
+    ATTRS = %i[id queue cron rrule dtstart type description request created_at].freeze
 
     ATTRS.each do |name|
       define_method(name) do
@@ -15,7 +15,7 @@ module Mergent
 
     def self.create(params = {})
       data = Client.post(
-        "tasks",
+        "schedules",
         { queue: Mergent::Object::DEFAULT_QUEUE }.merge(params)
       )
       new(data)

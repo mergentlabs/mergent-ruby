@@ -23,11 +23,11 @@ RSpec.describe Mergent::RequestValidator do
   describe "#valid_signature?" do
     it "returns true when the signature is valid" do
       signature = validator.build_signature(nil)
-      expect(validator.valid_signature?(nil, signature)).to(eq(true))
+      expect(validator.valid_signature?(nil, signature)).to(be(true))
     end
 
     it "returns false when the signature is invalid" do
-      expect(validator.valid_signature?(nil, "invalidsignature")).to(eq(false))
+      expect(validator.valid_signature?(nil, "invalidsignature")).to(be(false))
     end
   end
 end

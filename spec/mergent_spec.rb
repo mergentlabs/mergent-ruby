@@ -2,7 +2,7 @@
 
 RSpec.describe Mergent do
   it "has a version number" do
-    expect(Mergent::VERSION).not_to be nil
+    expect(Mergent::VERSION).not_to be_nil
   end
 
   describe ".api_key=" do

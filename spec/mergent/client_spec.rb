@@ -7,7 +7,7 @@ RSpec.describe Mergent::Client do
   end
 
   shared_examples "a client action" do # rubocop:disable RSpec/BlockLength
-    it "makes a DELETE request to the specified resource, parsing the JSON body into an Object" do
+    it "makes a request to the specified resource with the specified action, parsing the JSON body into an Object" do
       params = { name: "objectname" }
       stub = stub_request(action, "#{Mergent.endpoint}/objects")
         .with(

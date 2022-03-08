@@ -34,8 +34,14 @@ Mergent.api_key = "..."
 # create a Task
 task = Mergent::Task.create({ request: { url: "https://example.com" } })
 
-# get the newly created Task's name
-task.name
+# get the newly created Task's ID
+task.id
+
+# create a Schedule
+schedule = Mergent::Schedule.create({ cron: "0 8 * * *", request: { url: "https://example.com" } })
+
+# get the newly created Schedule's cron schedule
+schedule.cron
 ```
 
 See the [Mergent Ruby docs](https://docs.mergent.co/libraries/ruby) for more

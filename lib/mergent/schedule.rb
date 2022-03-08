@@ -21,8 +21,13 @@ module Mergent
       new(data)
     end
 
+    def self.update(id, params)
+      data = Client.patch("schedules/#{id}", params)
+      new(data)
+    end
+
     def self.delete(id)
-      Client.delete("schedules/#{id}", {})
+      Client.delete("schedules/#{id}")
       true
     end
   end

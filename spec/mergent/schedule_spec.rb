@@ -85,4 +85,33 @@ RSpec.describe Mergent::Schedule do
       expect(described_class.delete(id)).to(be(true))
     end
   end
+
+  describe "#update" do
+    let!(:stub) do
+      stub_request(:patch, "#{Mergent.endpoint}/schedules/#{id}")
+        .with(
+          headers: {
+            Authorization: "Bearer #{Mergent.api_key}",
+            "Content-Type": "application/json"
+          },
+          body: updates.to_json
+        )
+        .to_return(body: { id: "12345", **updates }.to_json)
+    end
+
+    let(:id) { "1234567890" }
+    let(:updates) { { description: "My updated description" } }
+
+    it "sends the request" do
+      described_class.update(id, updates)
+
+      expect(stub).to have_been_made
+    end
+
+    it "returns the updated Schedule" do
+      schedule = described_class.update(id, updates)
+
+      expect(schedule.description).to(eq("My updated description"))
+    end
+  end
 end

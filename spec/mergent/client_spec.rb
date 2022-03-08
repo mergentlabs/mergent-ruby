@@ -10,14 +10,14 @@ RSpec.describe Mergent::Client do
     it "makes a request to the specified resource with the specified action, parsing the JSON body into an Object" do
       params = { name: "objectname" }
       stub = stub_request(action, "#{Mergent.endpoint}/objects")
-        .with(
-          headers: {
-            Authorization: "Bearer #{Mergent.api_key}",
-            "Content-Type": "application/json"
-          },
-          body: params.to_json
-        )
-        .to_return(body: params.to_json)
+             .with(
+               headers: {
+                 Authorization: "Bearer #{Mergent.api_key}",
+                 "Content-Type": "application/json"
+               },
+               body: params.to_json
+             )
+             .to_return(body: params.to_json)
 
       data = described_class.public_send(action, :objects, params)
 
@@ -61,10 +61,10 @@ RSpec.describe Mergent::Client do
         expect do
           described_class.public_send(action, :objects, {})
         end.to raise_error(
-                 Mergent::Error,
-                 "A 422 has occurred. - Name contains invalid characters, Delay is not a valid ISO 8601 duration, "\
+          Mergent::Error,
+          "A 422 has occurred. - Name contains invalid characters, Delay is not a valid ISO 8601 duration, "\
           "Request url is not a valid URL"
-               )
+        )
       end
     end
 

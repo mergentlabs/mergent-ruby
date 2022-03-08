@@ -3,6 +3,8 @@
 - Add `id` field to Task
 - Add `queue` field to Task, defaulting to `default`
 - Remove `description` field from Task
+- Add client support for DELETE and PATCH requests
+- Add support for creating, deleting, and updating Schedules
 
 ## [0.2.2] - 2022-01-20
 

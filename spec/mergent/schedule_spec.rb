@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Mergent::Schedule do
+  before do
+    Mergent.api_key = "abcd1234"
+  end
+
   describe "delegated methods" do
     described_class::ATTRS.each do |method_name|
       it "defines a method for #{method_name}" do
@@ -26,7 +30,7 @@ RSpec.describe Mergent::Schedule do
         .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json)
     end
 
-    context "when queue is passed" do
+    context "when :queue is passed" do
       let(:params) { { queue: queue, request: { url: "https://example.com" } } }
       let(:queue) { "foobar" }
 
@@ -54,6 +58,31 @@ RSpec.describe Mergent::Schedule do
         expect(schedule).to be_a described_class
         expect(schedule.queue).to eq "default"
       end
+    end
+  end
+
+  describe "#delete" do
+    let!(:stub) do
+      stub_request(:delete, "#{Mergent.endpoint}/schedules/#{id}")
+        .with(
+          headers: {
+            Authorization: "Bearer #{Mergent.api_key}",
+            "Content-Type": "application/json"
+          }
+        )
+        .to_return(body: nil)
+    end
+
+    let(:id) { "1234567890" }
+
+    it "sends the request" do
+      described_class.delete(id)
+
+      expect(stub).to have_been_made
+    end
+
+    it "returns true" do
+      expect(described_class.delete(id)).to(be(true))
     end
   end
 end

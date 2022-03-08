@@ -31,7 +31,9 @@ module Mergent
       https = Net::HTTP.new(uri.host, uri.port)
       https.use_ssl = Mergent.endpoint.start_with?("https")
       response = https.request(request)
-      response_body = response.read_body || "{}"
+
+      read_body = response.read_body
+      response_body = read_body.empty? ? "{}" : read_body
 
       case response
       when Net::HTTPSuccess

@@ -20,5 +20,10 @@ module Mergent
       )
       new(data)
     end
+
+    def self.delete(id)
+      Client.delete("schedules/#{id}", {})
+      true
+    end
   end
 end

@@ -13,6 +13,10 @@ module Mergent
       request(Net::HTTP::Delete, resource, params)
     end
 
+    def self.patch(resource, params)
+      request(Net::HTTP::Patch, resource, params)
+    end
+
     private
 
     def self.request(request_class, resource, params) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

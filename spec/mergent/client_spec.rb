@@ -102,4 +102,10 @@ RSpec.describe Mergent::Client do
 
     include_examples "a client action"
   end
+
+  describe "#patch" do
+    let(:action) { :patch }
+
+    include_examples "a client action"
+  end
 end

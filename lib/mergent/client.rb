@@ -9,8 +9,8 @@ module Mergent
       request(Net::HTTP::Post, resource, params)
     end
 
-    def self.delete(resource)
-      request(Net::HTTP::Delete, resource, {})
+    def self.delete(resource, params = {})
+      request(Net::HTTP::Delete, resource, params)
     end
 
     def self.patch(resource, params)

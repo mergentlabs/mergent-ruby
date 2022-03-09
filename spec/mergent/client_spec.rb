@@ -25,6 +25,19 @@ RSpec.describe Mergent::Client do
       expect(data["name"]).to eq "objectname"
     end
 
+    context "when the API returns a successful response without a body" do
+      it "returns an empty hash" do
+        stub_request(action, "#{Mergent.endpoint}/objects")
+          .to_return(
+            status: 204,
+            body: nil
+          )
+
+        data = described_class.public_send(action, :objects, {})
+        expect(data).to(eq({}))
+      end
+    end
+
     context "when the API returns an error with a body, without additional errors" do
       it "raises an Error" do
         stub_request(action, "#{Mergent.endpoint}/objects")

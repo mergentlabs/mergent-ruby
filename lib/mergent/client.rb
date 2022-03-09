@@ -33,7 +33,7 @@ module Mergent
       response = https.request(request)
 
       read_body = response.read_body
-      response_body = read_body.empty? ? "{}" : read_body
+      response_body = read_body.nil? || read_body.empty? ? "{}" : read_body
 
       case response
       when Net::HTTPSuccess

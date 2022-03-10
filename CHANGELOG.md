@@ -1,9 +1,12 @@
 ## [Unreleased]
 
-- Add `id` field to Task
-- Add `queue` field to Task, defaulting to `default`
-- Remove `description` field from Task
-- Add client support for DELETE and PATCH requests
+## [1.0] - 2022-03-10
+
+- Switch to the V2 API
+  - Add `id` attribute to Task
+  - Make `name` optional
+  - Add optional `queue` attribute to Task that defaults to `default`
+  - Remove `description` from Task
 - Add support for creating, deleting, and updating Schedules
 
 ## [0.2.2] - 2022-01-20

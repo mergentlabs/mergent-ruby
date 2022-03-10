@@ -64,6 +64,14 @@ push the `.gem` file to [rubygems.org](https://rubygems.org).
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/mergentlabs/mergent-ruby.
 
+## Distributing
+
+1. Update the changelog in `CHANGELOG.md`
+1. Update the version in `lib/mergent/version.rb`
+1. Commit the version bump and tag using `git tag $VERSION`
+1. Push with `git push --tags`
+1. Build & publish with `rake release`
+
 ## License
 
 The gem is available as open source under the terms of the

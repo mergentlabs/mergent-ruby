@@ -13,7 +13,7 @@ RSpec.describe Mergent::Schedule do
     end
   end
 
-  describe "#create" do
+  describe ".create" do
     before do
       Mergent.api_key = "abcd1234"
     end
@@ -27,7 +27,7 @@ RSpec.describe Mergent::Schedule do
           },
           body: expected_body
         )
-        .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json)
+        .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json, status: 201)
     end
 
     context "when :queue is passed" do
@@ -61,7 +61,7 @@ RSpec.describe Mergent::Schedule do
     end
   end
 
-  describe "#delete" do
+  describe ".delete" do
     let!(:stub) do
       stub_request(:delete, "#{Mergent.endpoint}/schedules/#{id}")
         .with(
@@ -70,7 +70,7 @@ RSpec.describe Mergent::Schedule do
             "Content-Type": "application/json"
           }
         )
-        .to_return(body: nil)
+        .to_return(body: nil, status: 204)
     end
 
     let(:id) { "1234567890" }
@@ -86,7 +86,7 @@ RSpec.describe Mergent::Schedule do
     end
   end
 
-  describe "#update" do
+  describe ".update" do
     let!(:stub) do
       stub_request(:patch, "#{Mergent.endpoint}/schedules/#{id}")
         .with(

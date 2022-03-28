@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mergent::Schedule do
+RSpec.describe Mergent::Job do
   before do
     Mergent.api_key = "abcd1234"
   end
@@ -19,7 +19,7 @@ RSpec.describe Mergent::Schedule do
     end
 
     let!(:stub) do
-      stub_request(:post, "#{Mergent.endpoint}/schedules")
+      stub_request(:post, "#{Mergent.endpoint}/jobs")
         .with(
           headers: {
             Authorization: "Bearer #{Mergent.api_key}",
@@ -36,12 +36,12 @@ RSpec.describe Mergent::Schedule do
 
       let(:expected_body) { params.to_json }
 
-      it "creates and returns a Schedule with the specified params" do
-        schedule = described_class.create(params)
+      it "creates and returns a Job with the specified params" do
+        job = described_class.create(params)
 
         expect(stub).to have_been_made
-        expect(schedule).to be_a described_class
-        expect(schedule.queue).to eq queue
+        expect(job).to be_a described_class
+        expect(job.queue).to eq queue
       end
     end
 
@@ -52,18 +52,47 @@ RSpec.describe Mergent::Schedule do
       let(:queue) { "default" }
 
       it "uses the default queue name" do
-        schedule = described_class.create(params)
+        job = described_class.create(params)
 
         expect(stub).to have_been_made
-        expect(schedule).to be_a described_class
-        expect(schedule.queue).to eq "default"
+        expect(job).to be_a described_class
+        expect(job.queue).to eq "default"
       end
+    end
+  end
+
+  describe ".update" do
+    let!(:stub) do
+      stub_request(:patch, "#{Mergent.endpoint}/jobs/#{id}")
+        .with(
+          headers: {
+            Authorization: "Bearer #{Mergent.api_key}",
+            "Content-Type": "application/json"
+          },
+          body: updates.to_json
+        )
+        .to_return(body: { id: "12345", **updates }.to_json)
+    end
+
+    let(:id) { "1234567890" }
+    let(:updates) { { name: "My updated name" } }
+
+    it "sends the request" do
+      described_class.update(id, updates)
+
+      expect(stub).to have_been_made
+    end
+
+    it "returns the updated Job" do
+      job = described_class.update(id, updates)
+
+      expect(job.name).to(eq("My updated name"))
     end
   end
 
   describe ".delete" do
     let!(:stub) do
-      stub_request(:delete, "#{Mergent.endpoint}/schedules/#{id}")
+      stub_request(:delete, "#{Mergent.endpoint}/jobs/#{id}")
         .with(
           headers: {
             Authorization: "Bearer #{Mergent.api_key}",
@@ -83,35 +112,6 @@ RSpec.describe Mergent::Schedule do
 
     it "returns true" do
       expect(described_class.delete(id)).to(be(true))
-    end
-  end
-
-  describe ".update" do
-    let!(:stub) do
-      stub_request(:patch, "#{Mergent.endpoint}/schedules/#{id}")
-        .with(
-          headers: {
-            Authorization: "Bearer #{Mergent.api_key}",
-            "Content-Type": "application/json"
-          },
-          body: updates.to_json
-        )
-        .to_return(body: { id: "12345", **updates }.to_json)
-    end
-
-    let(:id) { "1234567890" }
-    let(:updates) { { description: "My updated description" } }
-
-    it "sends the request" do
-      described_class.update(id, updates)
-
-      expect(stub).to have_been_made
-    end
-
-    it "returns the updated Schedule" do
-      schedule = described_class.update(id, updates)
-
-      expect(schedule.description).to(eq("My updated description"))
     end
   end
 end

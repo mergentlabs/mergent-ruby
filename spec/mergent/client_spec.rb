@@ -6,7 +6,7 @@ RSpec.describe Mergent::Client do
     Mergent.endpoint = "https://testhost.mergent.co/api"
   end
 
-  shared_examples "a client action" do # rubocop:disable RSpec/BlockLength
+  shared_examples "a client action" do # rubocop:disable Metrics/BlockLength
     it "makes a request to the specified resource with the specified action, parsing the JSON body into an Object" do
       params = { name: "objectname" }
       stub = stub_request(action, "#{Mergent.endpoint}/objects")

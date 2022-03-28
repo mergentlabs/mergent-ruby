@@ -1,0 +1,34 @@
+# frozen_string_literal: true
+
+require_relative "client"
+require_relative "object"
+
+module Mergent
+  class Job < Mergent::Object
+    ATTRS = %i[id name queue status activity visible_at created_at].freeze
+
+    ATTRS.each do |name|
+      define_method(name) do
+        @_data[name]
+      end
+    end
+
+    def self.create(params = {})
+      data = Client.post(
+        "jobs",
+        { queue: Mergent::Object::DEFAULT_QUEUE }.merge(params)
+      )
+      new(data)
+    end
+
+    def self.update(id, params)
+      data = Client.patch("jobs/#{id}", params)
+      new(data)
+    end
+
+    def self.delete(id)
+      Client.delete("jobs/#{id}")
+      true
+    end
+  end
+end

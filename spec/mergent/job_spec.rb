@@ -13,7 +13,7 @@ RSpec.describe Mergent::Job do
     end
   end
 
-  describe "#create" do
+  describe ".create" do
     before do
       Mergent.api_key = "abcd1234"
     end
@@ -27,7 +27,7 @@ RSpec.describe Mergent::Job do
           },
           body: expected_body
         )
-        .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json)
+        .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json, status: 201)
     end
 
     context "when :queue is passed" do
@@ -61,32 +61,7 @@ RSpec.describe Mergent::Job do
     end
   end
 
-  describe "#delete" do
-    let!(:stub) do
-      stub_request(:delete, "#{Mergent.endpoint}/jobs/#{id}")
-        .with(
-          headers: {
-            Authorization: "Bearer #{Mergent.api_key}",
-            "Content-Type": "application/json"
-          }
-        )
-        .to_return(body: nil)
-    end
-
-    let(:id) { "1234567890" }
-
-    it "sends the request" do
-      described_class.delete(id)
-
-      expect(stub).to have_been_made
-    end
-
-    it "returns true" do
-      expect(described_class.delete(id)).to(be(true))
-    end
-  end
-
-  describe "#update" do
+  describe ".update" do
     let!(:stub) do
       stub_request(:patch, "#{Mergent.endpoint}/jobs/#{id}")
         .with(
@@ -112,6 +87,31 @@ RSpec.describe Mergent::Job do
       job = described_class.update(id, updates)
 
       expect(job.name).to(eq("My updated name"))
+    end
+  end
+
+  describe ".delete" do
+    let!(:stub) do
+      stub_request(:delete, "#{Mergent.endpoint}/jobs/#{id}")
+        .with(
+          headers: {
+            Authorization: "Bearer #{Mergent.api_key}",
+            "Content-Type": "application/json"
+          }
+        )
+        .to_return(body: nil, status: 204)
+    end
+
+    let(:id) { "1234567890" }
+
+    it "sends the request" do
+      described_class.delete(id)
+
+      expect(stub).to have_been_made
+    end
+
+    it "returns true" do
+      expect(described_class.delete(id)).to(be(true))
     end
   end
 end

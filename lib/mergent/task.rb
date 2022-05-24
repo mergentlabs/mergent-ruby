@@ -20,5 +20,15 @@ module Mergent
       )
       new(data)
     end
+
+    def self.update(id, params)
+      data = Client.patch("tasks/#{id}", params)
+      new(data)
+    end
+
+    def self.delete(id)
+      Client.delete("tasks/#{id}")
+      true
+    end
   end
 end

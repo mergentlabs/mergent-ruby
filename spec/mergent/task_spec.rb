@@ -9,7 +9,7 @@ RSpec.describe Mergent::Task do
     end
   end
 
-  describe "#create" do
+  describe ".create" do
     before do
       Mergent.api_key = "abcd1234"
     end
@@ -23,7 +23,7 @@ RSpec.describe Mergent::Task do
           },
           body: expected_body
         )
-        .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json)
+        .to_return(body: { id: "3ffd61d6-b10e-45d5-b266-e998aea71e8b", queue: queue }.to_json, status: 201)
     end
 
     context "when queue is passed" do
@@ -54,6 +54,60 @@ RSpec.describe Mergent::Task do
         expect(task).to be_a described_class
         expect(task.queue).to eq "default"
       end
+    end
+  end
+
+  describe ".update" do
+    let!(:stub) do
+      stub_request(:patch, "#{Mergent.endpoint}/tasks/#{id}")
+        .with(
+          headers: {
+            Authorization: "Bearer #{Mergent.api_key}",
+            "Content-Type": "application/json"
+          },
+          body: updates.to_json
+        )
+        .to_return(body: { id: "12345", **updates }.to_json)
+    end
+
+    let(:id) { "1234567890" }
+    let(:updates) { { name: "My updated name" } }
+
+    it "sends the request" do
+      described_class.update(id, updates)
+
+      expect(stub).to have_been_made
+    end
+
+    it "returns the updated Task" do
+      task = described_class.update(id, updates)
+
+      expect(task.name).to(eq("My updated name"))
+    end
+  end
+
+  describe ".delete" do
+    let!(:stub) do
+      stub_request(:delete, "#{Mergent.endpoint}/tasks/#{id}")
+        .with(
+          headers: {
+            Authorization: "Bearer #{Mergent.api_key}",
+            "Content-Type": "application/json"
+          }
+        )
+        .to_return(body: nil, status: 204)
+    end
+
+    let(:id) { "1234567890" }
+
+    it "sends the request" do
+      described_class.delete(id)
+
+      expect(stub).to have_been_made
+    end
+
+    it "returns true" do
+      expect(described_class.delete(id)).to(be(true))
     end
   end
 end
